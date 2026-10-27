@@ -372,6 +372,19 @@
       margin-bottom: 6px;
     }
 
+    /* 小尺寸 UI 截图（状态/维度示例） */
+    .mini-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .mini-row img {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.3);
+    }
+
     /* 双录屏并排 */
     .video-grid {
       display: grid;
@@ -424,7 +437,7 @@
       <div class="case-head">
         <div class="case-index">01 · 移动入口</div>
         <h2>手机上一步到位，数据全部落进同一个 Base</h2>
-        <p>桌面放五个快捷指令图标，点开就是对应的飞书表单 —— 记一笔、记灵感、记一部、子弹时间，各自独立封面与文案，没有「先找 App、再找表格」的摩擦</p>
+        <p>桌面放五个快捷指令图标，点开就是对应的飞书表单 —— 记一笔、记灵感、记一部、子弹时间、即兴演讲，各自独立封面与文案，没有「先找 App、再找表格」的摩擦</p>
       </div>
 
       <div class="pipeline">
@@ -471,7 +484,7 @@
           </ul>
           <span class="status-pill">日常在用 · 每天多条</span>
           <div class="screenshot">
-            <img src="images/ios_shortcuts.jpg" alt="iPhone 桌面快捷指令" />
+            <img src="images/ios_shortcuts.jpg" alt="iPhone 桌面快捷指令 · 五个入口" />
           </div>
         </article>
       </div>
@@ -523,10 +536,10 @@
       <div class="case-head">
         <div class="case-index">03 · 开销多维表</div>
         <h2>记账的意义在于口径，不在于记录</h2>
-        <p>585 条记录全部来自上面那个表单，公式字段自动算出记账日与记账月 —— 图表按月聚合，紫色是投资、青色是真实支出、绿色是收入</p>
+        <p>手机上一笔 10 秒记完，落进底表、自动算口径，晚上自动播报、月底自动出报表 —— 从记录到分析，中间没有任何手工整理</p>
       </div>
 
-      <div class="cards single">
+      <div class="cards">
         <article class="card">
           <div class="card-header">
             <div class="card-badge">1</div>
@@ -542,7 +555,75 @@
           </ul>
           <span class="status-pill">持续更新 · 表单直写</span>
           <div class="screenshot">
-            <img src="images/chart_kx.png" alt="开销月度口径图" />
+            <img src="images/chart_kx.png" alt="开销月度口径图（金额已隐去）" />
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">2</div>
+            <div>
+              <h3>手机 ↔ 底表，天然相通</h3>
+              <p class="sub">表单不是先攒着再导入，提交即落底表</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>一份数据：</strong>手机表单提交的每一笔，就是桌面端看到的那张底表 —— 手机记一笔，电脑上的挂件和报表立刻可见</li>
+            <li><strong>公式接住：</strong>底表用公式字段自动算「记账日 / 记账月」，并按日分组；谁都不用手动填日期分组</li>
+            <li><strong>维护只在一处：</strong>口径调整（新增事项选项、修正备注）都在底表上改，手机端下次填写自动生效</li>
+          </ul>
+          <div class="video-grid">
+            <div class="screenshot">
+              <img src="images/form_jiyibi.jpg" alt="记一笔表单" />
+              <div class="v-cap">手机端 · 记一笔表单（三个必填项）</div>
+            </div>
+            <div class="screenshot">
+              <img src="images/kx_base.png" alt="开销底表" />
+              <div class="v-cap">底表 · 提交直达，公式字段自动算日/月并分组</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">3</div>
+            <div>
+              <h3>定时产出：消费日报与月度报表</h3>
+              <p class="sub">不用打开表，数字自己来找你</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>消费日报推送：</strong>每天晚上 23:00 自动读取消费总览的实时数字，把今日消费、本月消费、支出笔数、本月收入与结余推送到飞书 —— 投资理财不算花掉的钱，已排除</li>
+            <li><strong>月度消费报表：</strong>按记账月聚合出每月的支出 / 收入 / 投资结构与事项占比，月底自动成型，不用月底手工统计</li>
+            <li><strong>数字可追溯：</strong>播报里的每个数字都来自底表实时汇总，点「打开开销记录表」可直接回看原始记录</li>
+          </ul>
+          <div class="video-grid">
+            <div class="screenshot">
+              <img src="images/kx_push_plan.png" alt="消费日报推送计划" />
+              <div class="v-cap">推送计划 · 每晚 23:00 触发</div>
+            </div>
+            <div class="screenshot">
+              <img src="images/kx_push_msg.png" alt="消费日报推送效果" />
+              <div class="v-cap">实际收到的消费日报</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">4</div>
+            <div>
+              <h3>个人消费分析看板</h3>
+              <p class="sub">底表数据的可视化，自动聚合、实时更新</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>月度收支概览：</strong>每月总支出 / 总收入两张柱图，趋势一眼可见</li>
+            <li><strong>支出结构分析：</strong>支出事项占比、支付途径分布，花钱结构不用拉明细就知道</li>
+            <li><strong>全部来自底表：</strong>看板是底表的视图而非另做一份报表 —— 底表改口径，看板跟着变</li>
+          </ul>
+          <div class="screenshot">
+            <img src="images/kx_dashboard.png" alt="个人消费分析看板" />
           </div>
         </article>
       </div>
@@ -554,8 +635,8 @@
     <section class="case" id="zidan">
       <div class="case-head">
         <div class="case-index">04 · 子弹时间</div>
-        <h2>从手机表单到桌面挂件，一条数据两条路</h2>
-        <p>子弹时间记录表是这套系统里工程量最大的一块：手机端表单随手记，电脑端一个原生窗口挂件常驻桌面 —— 置顶、半透明、贴边自动收回，改字段直接写回飞书</p>
+        <h2>一天的事件，从一个想法到闭环只需一次记录</h2>
+        <p>沿用国内外很火的「子弹时间记录法」：一天的每件事先归入维度（工作 / 生活 / 学习），再用四种状态标记它的走向 —— 记录的那一刻就已经想清楚这件事归谁、做不做、什么时候做</p>
       </div>
 
       <div class="cards">
@@ -563,19 +644,18 @@
           <div class="card-header">
             <div class="card-badge">1</div>
             <div>
-              <h3>桌面挂件</h3>
-              <p class="sub">原生无边框窗口，不是浏览器套壳</p>
+              <h3>理念：四种状态 × 三个维度</h3>
+              <p class="sub">记录法本身很简单，难的是执行闭环</p>
             </div>
           </div>
           <ul>
-            <li><strong>系统级置顶 + 透明度：</strong>原生窗口实现，浏览器窗口做不到真置顶和透明度调节</li>
-            <li><strong>贴边吸附：</strong>拖到屏幕边缘自动收成小条，鼠标靠近再展开</li>
-            <li><strong>直接改表：</strong>类型 / 状态在挂件上点选即写回多维表，双击文字可改事项</li>
-            <li><strong>子任务：</strong>「+子」在任意一条下挂子记录，父子结构进表</li>
+            <li><strong>四种状态：</strong>每件事对应一种走向 —— 待完成、转给别人、已完成、无须再做，一眼分清「我的事」和「别人的事」</li>
+            <li><strong>三个维度：</strong>工作 / 生活 / 学习，记的时候就归类，周报和复盘按维度自动汇总</li>
+            <li><strong>极简符号：</strong>沿用手账圈的子弹符号习惯，输入成本几乎为零，剩下的交给我来处理</li>
           </ul>
-          <span class="status-pill">开机自启 · 每天在用</span>
-          <div class="screenshot">
-            <img src="images/widget_dark.png" alt="子弹时间桌面挂件" />
+          <div class="mini-row">
+            <img src="images/zt_status.png" alt="四种状态" style="width:170px" />
+            <img src="images/zt_dims.png" alt="工作/生活/学习" style="width:110px" />
           </div>
         </article>
 
@@ -583,28 +663,60 @@
           <div class="card-header">
             <div class="card-badge">2</div>
             <div>
-              <h3>双向同步 · 实机录屏</h3>
-              <p class="sub">左：挂件操作与贴边吸附；右：改动实时写回多维表</p>
+              <h3>事件全流程的封闭系统</h3>
+              <p class="sub">手机表单随手记，桌面挂件随时改，智能体盯着推</p>
             </div>
           </div>
           <ul>
-            <li><strong>写入可靠：</strong>失败自动重试三次、按字段类型决定写入格式，杜绝「改了没同步」</li>
-            <li><strong>本地缓存 45 秒：</strong>界面轮询不卡顿，lark-cli 后台线程拉数据</li>
+            <li><strong>记录（手机表单）：</strong>桌面图标点开即填，10 秒一条</li>
+            <li><strong>执行（桌面挂件）：</strong>原生无边框窗口常驻桌面 —— 真置顶、可调透明度、贴边自动收成小条；类型 / 状态点选即写回飞书，双击改事项，支持父子任务</li>
+            <li><strong>盯办（飞书智能体）：</strong>每天自动汇总未完成事项推送到会话，明确哪些要转交跟进、哪些自行跟进、哪些还没标状态 —— 不打开表也知道今天欠什么</li>
+            <li><strong>日程（日历视图）：</strong>底表直接切日历视图按月查看，点开一天看全部事项，日程安排一站式解决，定时提醒可设置</li>
           </ul>
+          <div class="screenshot">
+            <img src="images/widget_dark.png" alt="子弹时间桌面挂件" />
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">3</div>
+            <div>
+              <h3>智能体盯办 · 日历视图</h3>
+              <p class="sub">事件在底表里，闭环在推送里</p>
+            </div>
+          </div>
           <div class="video-grid">
             <div class="screenshot">
-              <video controls preload="metadata" src="videos_widget.mp4"></video>
-              <div class="v-cap">桌面挂件：置顶 / 透明度 / 新增一条</div>
+              <img src="images/zt_agent_push.png" alt="飞书智能体事项推送" />
+              <div class="v-cap">智能体每日推送 · 未完成事项汇总与跟进建议</div>
             </div>
-            <div class="screenshot">
-              <video controls preload="metadata" src="videos_sync.mp4"></video>
-              <div class="v-cap">多维表端：挂件改动实时同步</div>
+            <div class="screenshot tall">
+              <img src="images/zt_calendar.png" alt="日历视图" />
+              <div class="v-cap">日历视图 · 按月看日程，点开一天看全部事项</div>
             </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">4</div>
+            <div>
+              <h3>完整功能演示</h3>
+              <p class="sub">从记录、挂件操作到推送与日历，一镜到底</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>写入可靠：</strong>失败自动重试、按字段类型决定写入格式，杜绝「改了没同步」</li>
+            <li><strong>本地缓存：</strong>界面轮询不卡顿，后台线程拉数据，断网也能看最近状态</li>
+          </ul>
+          <div class="screenshot">
+            <video controls preload="metadata" src="videos_demo.mp4"></video>
           </div>
         </article>
       </div>
 
-      <div class="finding"><strong>为什么不用现成工具：</strong>待办 App 很多，但能「改一处、两边同时变」且完全长在自己的数据表上，没有 —— 于是自己写了一个（单文件约 500 行，从解释器选型到父子记录都是自己踩通的）。</div>
+      <div class="finding"><strong>为什么不用现成工具：</strong>计时软件、待办 App 很多，但能「手机记、桌面改、智能体催、日历看」四件事共用同一张底表且完全长在自己的数据上的，没有 —— 于是自己搭了这条链路（挂件为单文件原生窗口约 500 行，全部自己踩通）。</div>
     </section>
 
     <hr class="divider" />
@@ -613,27 +725,69 @@
     <section class="case" id="gold">
       <div class="case-head">
         <div class="case-index">05 · 黄金播报</div>
-        <h2>行情、定投、持仓，一张表自己会说话</h2>
-        <p>每个交易日收盘价自动入库（2022 年至今 1179 个交易日），按规则给出当日建议定投额，定时推送到飞书；持仓总览由公式实时算市值与收益</p>
+        <h2>行情、判断、持仓，三张表自己会说话</h2>
+        <p>每个交易日收盘价自动入库（2022 年至今 1179 个交易日），电脑开机自启动、定时推送黄金日报到飞书 —— 日报里不只给数字，还给出判断依据和术语科普</p>
       </div>
 
-      <div class="cards single">
+      <div class="cards">
         <article class="card">
           <div class="card-header">
             <div class="card-badge">1</div>
             <div>
-              <h3>上海金走势 + 持仓总览</h3>
-              <p class="sub">数据源为上海金 Au99.99 收盘价，与表内逐日核对一致</p>
+              <h3>三张表的结构</h3>
+              <p class="sub">行情、持仓、资讯各归其位，公式把它们连起来</p>
             </div>
           </div>
           <ul>
-            <li><strong>自动取数：</strong>每日收盘后自动写入当日金价，播报里附建议定投额分档</li>
-            <li><strong>持仓公式化：</strong>市值、持有收益、收益率全部由公式按最新单价实时计算</li>
-            <li><strong>可追溯：</strong>每一行的数据都能对回行情接口的原始收盘价</li>
+            <li><strong>黄金定投追踪（每日一行）：</strong>当日金价、建议定投额、我的判断、买入/卖出记录 —— 系统的主表，1179 个交易日从未断更</li>
+            <li><strong>黄金持仓总览（每产品一行）：</strong>市值、持有收益、收益率全部由公式按最新单价实时计算，改一个单价全表自动刷新</li>
+            <li><strong>黄金资讯（逻辑沉淀）：</strong>行情背后的新闻与观点入库，通过关联字段挂到具体交易日 —— 每天的判断都能回溯到当时看到了什么</li>
           </ul>
-          <span class="status-pill">每交易日自动运行</span>
           <div class="screenshot">
-            <img src="images/chart_gold.png" alt="黄金播报走势与持仓" />
+            <img src="images/chart_gold.png" alt="上海金走势与指数化持仓" />
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">2</div>
+            <div>
+              <h3>判断依据 · 说人话版</h3>
+              <p class="sub">日报里的每个结论都有对应的可查依据，术语当天科普</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>位置分位：</strong>今天的金价在过去一年里排第几 —— 越接近一年最低位，定投档位越高（大白话：打折越多越值得买）</li>
+            <li><strong>均线 MA5/10/20/60：</strong>最近 5/10/20/60 天的平均价，用来看短中长期趋势是向上还是被压着（大白话：现价站在哪条线下面，回本要涨过那条线）</li>
+            <li><strong>国际联动：</strong>伦敦金、COMEX 期货持仓、SPDR 持金量 —— 国外大资金在加仓还是撤退（大白话：聪明钱的方向）</li>
+            <li><strong>宏观事件：</strong>美联储 FOMC 议息、PCE 物价、实际利率 —— 利率越高，不生息的黄金越吃亏（大白话：存美元利息越高，拿黄金的机会成本越大）</li>
+            <li><strong>分档定投：</strong>按当日位置与状态给出建议定投额（低档多投 / 高位停投），执行不需要盘感</li>
+          </ul>
+          <div class="finding" style="margin-top:16px"><strong>日报的固定结构：</strong>行情快照 → 持仓总览 → 今日建议 → 今日判断（依据逐条展开）→ 术语科普。看不懂的词当天就有解释，长期读下来等于免费上了宏观课。</div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">3</div>
+            <div>
+              <h3>每日自动运行</h3>
+              <p class="sub">开机自启动 + 定时推送，零人工干预</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>开机自启动：</strong>脚本注册 Windows 开机自启，交易日自动取当日收盘价写入底表并核对</li>
+            <li><strong>黄金日报推送：</strong>定时把日报推送到飞书会话 —— 金价、涨跌、持仓总览、各产品明细、建议定投、判断与术语</li>
+            <li><strong>可追溯：</strong>每一行金价都能对回行情接口原始收盘价，播报数字与底表逐行一致</li>
+          </ul>
+          <div class="video-grid">
+            <div class="screenshot">
+              <img src="images/gold_report_1.png" alt="黄金日报 · 行情与持仓" />
+              <div class="v-cap">日报上半 · 行情快照 / 持仓总览 / 各产品明细</div>
+            </div>
+            <div class="screenshot">
+              <img src="images/gold_report_2.png" alt="黄金日报 · 建议与判断" />
+              <div class="v-cap">日报下半 · 今日建议 / 今日判断 / 术语科普</div>
+            </div>
           </div>
         </article>
       </div>
