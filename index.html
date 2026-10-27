@@ -110,7 +110,7 @@
 
     .toc a b { font-size: 12px; color: var(--cyan); font-weight: 700; }
 
-    .container { max-width: 1080px; margin: 0 auto; padding: 20px 24px 80px; }
+    .container { max-width: 1340px; margin: 0 auto; padding: 20px 32px 80px; }
 
     .case { margin-bottom: 76px; scroll-margin-top: 24px; }
     .case-head { text-align: center; margin-bottom: 34px; }
@@ -186,6 +186,10 @@
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 24px;
     }
+
+    /* 固定两卡一排（03/04 四板块版式） */
+    .cards.two { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 860px) { .cards.two { grid-template-columns: 1fr; } }
 
     .card {
       background: var(--bg-card);
@@ -392,7 +396,7 @@
       gap: 20px;
     }
     .video-grid .screenshot { margin-top: 0; }
-    .video-grid .v-cap {
+    .v-cap {
       padding: 12px 16px;
       font-size: 13.5px;
       color: var(--text-dim);
@@ -539,7 +543,7 @@
         <p>手机上一笔 10 秒记完，落进底表、自动算口径，晚上自动播报、月底自动出报表 —— 从记录到分析，中间没有任何手工整理</p>
       </div>
 
-      <div class="cards">
+      <div class="cards two">
         <article class="card">
           <div class="card-header">
             <div class="card-badge">1</div>
@@ -572,15 +576,9 @@
             <li><strong>公式接住：</strong>底表用公式字段自动算「记账日 / 记账月」，并按日分组；谁都不用手动填日期分组</li>
             <li><strong>维护只在一处：</strong>口径调整（新增事项选项、修正备注）都在底表上改，手机端下次填写自动生效</li>
           </ul>
-          <div class="video-grid">
-            <div class="screenshot">
-              <img src="images/form_jiyibi.jpg" alt="记一笔表单" />
-              <div class="v-cap">手机端 · 记一笔表单（三个必填项）</div>
-            </div>
-            <div class="screenshot">
-              <img src="images/kx_base.png" alt="开销底表" />
-              <div class="v-cap">底表 · 提交直达，公式字段自动算日/月并分组</div>
-            </div>
+          <div class="screenshot">
+            <img src="images/kx_base.png" alt="开销底表" />
+            <div class="v-cap">底表 · 提交直达，公式字段自动算日/月并分组</div>
           </div>
         </article>
 
@@ -639,7 +637,7 @@
         <p>沿用国内外很火的「子弹时间记录法」：一天的每件事先归入维度（工作 / 生活 / 学习），再用四种状态标记它的走向 —— 记录的那一刻就已经想清楚这件事归谁、做不做、什么时候做</p>
       </div>
 
-      <div class="cards">
+      <div class="cards two">
         <article class="card">
           <div class="card-header">
             <div class="card-badge">1</div>
@@ -653,9 +651,8 @@
             <li><strong>三个维度：</strong>工作 / 生活 / 学习，记的时候就归类，周报和复盘按维度自动汇总</li>
             <li><strong>极简符号：</strong>沿用手账圈的子弹符号习惯，输入成本几乎为零，剩下的交给我来处理</li>
           </ul>
-          <div class="mini-row">
-            <img src="images/zt_status.png" alt="四种状态" style="width:170px" />
-            <img src="images/zt_dims.png" alt="工作/生活/学习" style="width:110px" />
+          <div class="screenshot">
+            <img src="images/zt_matrix.png" alt="四种状态 × 三个维度示意" />
           </div>
         </article>
 
@@ -674,7 +671,8 @@
             <li><strong>日程（日历视图）：</strong>底表直接切日历视图按月查看，点开一天看全部事项，日程安排一站式解决，定时提醒可设置</li>
           </ul>
           <div class="screenshot">
-            <img src="images/widget_dark.png" alt="子弹时间桌面挂件" />
+            <img src="images/zt_widget_new.png" alt="子弹时间桌面挂件" style="max-width:460px;margin:0 auto" />
+            <div class="v-cap">桌面挂件 · 当日事项、四种状态与维度标签，点选即写回底表</div>
           </div>
         </article>
 
