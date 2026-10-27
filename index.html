@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>个人效率系统 · 作品集</title>
+  <meta name="description" content="一套跑在日常里的个人效率系统：iPhone 快捷指令一键进入飞书表单，开销、灵感、书影、子弹时间全部汇入同一个多维表，桌面挂件实时读写，黄金行情每日自动播报 —— AI 只做脏活，人只管记" />
+  <style>
+    :root {
+      --bg: #030712;
+      --bg-card: rgba(17, 24, 39, 0.7);
+      --border: rgba(56, 189, 248, 0.2);
+      --cyan: #22d3ee;
+      --blue: #3b82f6;
+      --violet: #8b5cf6;
+      --green: #10b981;
+      --text: #f3f4f6;
+      --text-dim: #94a3b8;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(circle at 50% 0%, black, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at 50% 0%, black, transparent 80%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .bg-glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.16), transparent 60%);
+      top: -200px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+
+    header { text-align: center; padding: 72px 20px 40px; }
+
+    header h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin: 0 0 12px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue), var(--violet));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -1px;
+    }
+
+    header p {
+      font-size: 18px;
+      color: var(--text-dim);
+      margin: 0 auto;
+      max-width: 760px;
+    }
+
+    .toc {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px 8px;
+    }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: 999px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 14px;
+      transition: all 0.25s ease;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      border-color: var(--cyan);
+      box-shadow: 0 0 18px rgba(34, 211, 238, 0.18);
+      transform: translateY(-2px);
+    }
+
+    .toc a b { font-size: 12px; color: var(--cyan); font-weight: 700; }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 20px 24px 80px; }
+
+    .case { margin-bottom: 76px; scroll-margin-top: 24px; }
+    .case-head { text-align: center; margin-bottom: 34px; }
+
+    .case-index {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(139, 92, 246, 0.12);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      color: #c4b5fd;
+      margin-bottom: 14px;
+    }
+
+    .case-head h2 {
+      font-size: 30px;
+      font-weight: 800;
+      margin: 0 0 8px;
+      letter-spacing: -0.5px;
+    }
+
+    .case-head p { margin: 0 auto; color: var(--text-dim); font-size: 15px; max-width: 680px; }
+
+    .pipeline {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 0 48px;
+      position: relative;
+    }
+
+    .pipeline::before {
+      content: "";
+      position: absolute;
+      top: 36px;
+      left: 10%;
+      right: 10%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), var(--blue), var(--violet), transparent);
+      z-index: 0;
+      opacity: 0.6;
+    }
+
+    .node { flex: 1; min-width: 0; position: relative; z-index: 1; text-align: center; }
+
+    .node-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: grid;
+      place-items: center;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: 0 0 24px rgba(139, 92, 246, 0.15);
+      font-size: 28px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .node:hover .node-icon { transform: scale(1.08); box-shadow: 0 0 32px rgba(139, 92, 246, 0.35); }
+
+    .node-title { font-weight: 700; font-size: 16px; margin-bottom: 6px; color: var(--text); }
+    .node-desc { font-size: 13px; color: var(--text-dim); padding: 0 8px; }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 56px rgba(139, 92, 246, 0.14);
+      border-color: rgba(139, 92, 246, 0.4);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet));
+      opacity: 0.7;
+    }
+
+    .card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+
+    .card-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(139, 92, 246, 0.12);
+      border: 1px solid rgba(139, 92, 246, 0.35);
+      font-size: 17px;
+      font-weight: 700;
+      color: #c4b5fd;
+      flex-shrink: 0;
+    }
+
+    .card h3 { margin: 0; font-size: 20px; font-weight: 700; }
+    .card p.sub { margin: 4px 0 0; color: var(--text-dim); font-size: 14px; }
+
+    .card ul { margin: 16px 0 0; padding-left: 18px; color: var(--text-dim); font-size: 14px; }
+    .card li { margin-bottom: 8px; }
+    .card li strong { color: var(--text); font-weight: 600; }
+
+    .screenshot {
+      margin-top: 20px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.3);
+    }
+
+    .screenshot img, .screenshot video { width: 100%; display: block; transition: transform 0.35s ease; }
+    .card:hover .screenshot img { transform: scale(1.02); }
+
+    /* 竖长截图：限高裁切预览 */
+    .screenshot.tall img {
+      max-height: 460px;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    /* 手机截图：保持竖屏比例并排展示 */
+    .phone-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 20px;
+    }
+    .phone-grid .shot {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.35);
+    }
+    .phone-grid .shot img { width: 100%; display: block; }
+    .phone-grid .shot-cap {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .phone-grid .shot-cap a { color: var(--cyan); text-decoration: none; font-weight: 700; white-space: nowrap; }
+    .phone-grid .shot-cap a:hover { text-shadow: 0 0 12px rgba(34,211,238,.6); }
+
+    .finding {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.07);
+      border: 1px solid rgba(16, 185, 129, 0.28);
+      border-left: 3px solid var(--green);
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+    .finding strong { color: var(--green); }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin: 0 0 40px;
+    }
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat b { display: block; font-size: 26px; font-weight: 800; color: var(--cyan); letter-spacing: -0.5px; }
+    .stat span { font-size: 12.5px; color: var(--text-dim); }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      margin-top: 16px;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    a.status-pill { text-decoration: none; cursor: pointer; }
+    a.status-pill:hover { border-color: var(--green); box-shadow: 0 0 16px rgba(16,185,129,.3); }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139,92,246,0.25), transparent);
+      margin: 0 0 64px;
+      border: 0;
+    }
+
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .note {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 24px;
+      font-size: 14px;
+      color: var(--text-dim);
+    }
+
+    .note h4 { margin: 0 0 8px; font-size: 15px; color: var(--text); }
+    .note .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--cyan);
+      margin-bottom: 6px;
+    }
+
+    /* 双录屏并排 */
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .video-grid .screenshot { margin-top: 0; }
+    .video-grid .v-cap {
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border);
+    }
+    @media (max-width: 860px) { .video-grid { grid-template-columns: 1fr; } }
+
+    @media (max-width: 760px) {
+      header h1 { font-size: 30px; }
+      .case-head h2 { font-size: 24px; }
+      .pipeline { flex-direction: column; gap: 30px; }
+      .pipeline::before { display: none; }
+      .cards { grid-template-columns: 1fr; }
+      .toc { display: none; }
+    }
+
+    footer { text-align: center; padding: 40px 20px; color: var(--text-dim); font-size: 13px; }
+  </style>
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow"></div>
+
+  <header>
+    <h1>个人效率系统</h1>
+    <p>不是一个个孤立的工具，而是一套跑在日常里的闭环：iPhone 快捷指令一键进入表单，开销、灵感、书影、子弹时间全部汇入同一个飞书多维表，Windows 桌面挂件直接读写表数据，黄金行情每天自动播报 —— 脏活交给自动化，人只负责记那一笔</p>
+  </header>
+
+  <nav class="toc">
+    <a href="#mobile"><b>01</b>移动入口</a>
+    <a href="#forms"><b>02</b>四个表单</a>
+    <a href="#kx"><b>03</b>开销多维表</a>
+    <a href="#zidan"><b>04</b>子弹时间</a>
+    <a href="#gold"><b>05</b>黄金播报</a>
+    <a href="#notes"><b>06</b>设计原则</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- 01 移动入口 -->
+    <section class="case" id="mobile">
+      <div class="case-head">
+        <div class="case-index">01 · 移动入口</div>
+        <h2>手机上一步到位，数据全部落进同一个 Base</h2>
+        <p>桌面放五个快捷指令图标，点开就是对应的飞书表单 —— 记一笔、记灵感、记一部、子弹时间，各自独立封面与文案，没有「先找 App、再找表格」的摩擦</p>
+      </div>
+
+      <div class="pipeline">
+        <div class="node">
+          <div class="node-icon">📱</div>
+          <div class="node-title">快捷指令</div>
+          <div class="node-desc">桌面图标一键直达表单</div>
+        </div>
+        <div class="node">
+          <div class="node-icon">📝</div>
+          <div class="node-title">飞书表单</div>
+          <div class="node-desc">最少字段，10 秒填完</div>
+        </div>
+        <div class="node">
+          <div class="node-icon">🧮</div>
+          <div class="node-title">多维表</div>
+          <div class="node-desc">公式自动算口径与月份</div>
+        </div>
+        <div class="node">
+          <div class="node-icon">🖥️</div>
+          <div class="node-title">桌面挂件</div>
+          <div class="node-desc">电脑上常驻可读写</div>
+        </div>
+        <div class="node">
+          <div class="node-icon">📣</div>
+          <div class="node-title">定时播报</div>
+          <div class="node-desc">金价与汇总自动推送</div>
+        </div>
+      </div>
+
+      <div class="cards single">
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">1</div>
+            <div>
+              <h3>iPhone 桌面 · 五个入口</h3>
+              <p class="sub">iOS 快捷指令打开表单链接，配上独立图标和名字，像原生 App 一样用</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>零摩擦：</strong>记一笔点开就是金额输入框，不需要在飞书里翻表</li>
+            <li><strong>各有各的封面：</strong>每个表单配了主题图和一句话文案，记录这件事本身有点仪式感</li>
+            <li><strong>记录分流：</strong>记什么进什么表，后台自动归类，不用事后整理</li>
+          </ul>
+          <span class="status-pill">日常在用 · 每天多条</span>
+          <div class="screenshot">
+            <img src="images/ios_shortcuts.jpg" alt="iPhone 桌面快捷指令" />
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 02 四个表单 -->
+    <section class="case" id="forms">
+      <div class="case-head">
+        <div class="case-index">02 · 四个表单</div>
+        <h2>记录的门槛，决定系统能活多久</h2>
+        <p>四个表单都只留最少必填项，点下面的链接可以直接体验（表单提交后进入对应多维表）—— 手机截图即实际使用界面</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>585</b><span>开销记录</span></div>
+        <div class="stat"><b>162</b><span>灵感条目</span></div>
+        <div class="stat"><b>166</b><span>读过的书与电影</span></div>
+        <div class="stat"><b>88</b><span>子弹时间条目</span></div>
+      </div>
+
+      <div class="phone-grid">
+        <div class="shot">
+          <img src="images/form_jiyibi.jpg" alt="记一笔表单" />
+          <div class="shot-cap"><span>记一笔 💰 · 开销</span><a href="https://ja0zlzeurz8.feishu.cn/share/base/shrcn9ev0f1ZYeJyy33FEmGZXyh" target="_blank">打开表单 →</a></div>
+        </div>
+        <div class="shot">
+          <img src="images/form_linggan.jpg" alt="记灵感表单" />
+          <div class="shot-cap"><span>记灵感 · 灵感库</span><a href="https://ja0zlzeurz8.feishu.cn/share/base/shrcnHHRH0i4G7VA5gt6FmCqX7d" target="_blank">打开表单 →</a></div>
+        </div>
+        <div class="shot">
+          <img src="images/form_jiyibu.jpg" alt="记一部表单" />
+          <div class="shot-cap"><span>记一部 📖 · 书影</span><a href="https://ja0zlzeurz8.feishu.cn/share/base/shrcn2jQOCmq9stYy1LdqWeKnxf" target="_blank">打开表单 →</a></div>
+        </div>
+        <div class="shot">
+          <img src="images/form_zidan.jpg" alt="子弹时间表单" />
+          <div class="shot-cap"><span>子弹时间 · 每日记录</span><a href="https://ja0zlzeurz8.feishu.cn/share/base/shrcnI03lTQT2iKazdpl7eLsKYb" target="_blank">打开表单 →</a></div>
+        </div>
+      </div>
+
+      <div class="finding"><strong>设计取舍：</strong>收支类型只有「支出 / 收入 / 投资」三个选项 —— 投资是钱换个地方存，不算花掉。口径在表单端就收窄，后面的统计分析才不会失真。</div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 03 开销多维表 -->
+    <section class="case" id="kx">
+      <div class="case-head">
+        <div class="case-index">03 · 开销多维表</div>
+        <h2>记账的意义在于口径，不在于记录</h2>
+        <p>585 条记录全部来自上面那个表单，公式字段自动算出记账日与记账月 —— 图表按月聚合，紫色是投资、青色是真实支出、绿色是收入</p>
+      </div>
+
+      <div class="cards single">
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">1</div>
+            <div>
+              <h3>月度口径视图</h3>
+              <p class="sub">看钱真正花掉了多少，而不是流水动了多少</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>三分类口径：</strong>支出 / 收入 / 投资分开统计 —— 买入理财、基金赎回都标记为「投资」，差额才是净投入，不会把存钱误判成消费暴涨</li>
+            <li><strong>大额摊销：</strong>一次付数月房租时按付款日记账、备注起止月，做月度趋势时摊到各月，避免付款月虚高、之后虚低</li>
+            <li><strong>自动分组：</strong>公式字段「记账日 / 记账月」让仪表盘可以按天、按月透视，不用手工维护辅助列</li>
+          </ul>
+          <span class="status-pill">持续更新 · 表单直写</span>
+          <div class="screenshot">
+            <img src="images/chart_kx.png" alt="开销月度口径图" />
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 04 子弹时间 -->
+    <section class="case" id="zidan">
+      <div class="case-head">
+        <div class="case-index">04 · 子弹时间</div>
+        <h2>从手机表单到桌面挂件，一条数据两条路</h2>
+        <p>子弹时间记录表是这套系统里工程量最大的一块：手机端表单随手记，电脑端一个原生窗口挂件常驻桌面 —— 置顶、半透明、贴边自动收回，改字段直接写回飞书</p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">1</div>
+            <div>
+              <h3>桌面挂件</h3>
+              <p class="sub">原生无边框窗口，不是浏览器套壳</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>系统级置顶 + 透明度：</strong>原生窗口实现，浏览器窗口做不到真置顶和透明度调节</li>
+            <li><strong>贴边吸附：</strong>拖到屏幕边缘自动收成小条，鼠标靠近再展开</li>
+            <li><strong>直接改表：</strong>类型 / 状态在挂件上点选即写回多维表，双击文字可改事项</li>
+            <li><strong>子任务：</strong>「+子」在任意一条下挂子记录，父子结构进表</li>
+          </ul>
+          <span class="status-pill">开机自启 · 每天在用</span>
+          <div class="screenshot">
+            <img src="images/widget_dark.png" alt="子弹时间桌面挂件" />
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">2</div>
+            <div>
+              <h3>双向同步 · 实机录屏</h3>
+              <p class="sub">左：挂件操作与贴边吸附；右：改动实时写回多维表</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>写入可靠：</strong>失败自动重试三次、按字段类型决定写入格式，杜绝「改了没同步」</li>
+            <li><strong>本地缓存 45 秒：</strong>界面轮询不卡顿，lark-cli 后台线程拉数据</li>
+          </ul>
+          <div class="video-grid">
+            <div class="screenshot">
+              <video controls preload="metadata" src="videos_widget.mp4"></video>
+              <div class="v-cap">桌面挂件：置顶 / 透明度 / 新增一条</div>
+            </div>
+            <div class="screenshot">
+              <video controls preload="metadata" src="videos_sync.mp4"></video>
+              <div class="v-cap">多维表端：挂件改动实时同步</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="finding"><strong>为什么不用现成工具：</strong>待办 App 很多，但能「改一处、两边同时变」且完全长在自己的数据表上，没有 —— 于是自己写了一个（单文件约 500 行，从解释器选型到父子记录都是自己踩通的）。</div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 05 黄金播报 -->
+    <section class="case" id="gold">
+      <div class="case-head">
+        <div class="case-index">05 · 黄金播报</div>
+        <h2>行情、定投、持仓，一张表自己会说话</h2>
+        <p>每个交易日收盘价自动入库（2022 年至今 1179 个交易日），按规则给出当日建议定投额，定时推送到飞书；持仓总览由公式实时算市值与收益</p>
+      </div>
+
+      <div class="cards single">
+        <article class="card">
+          <div class="card-header">
+            <div class="card-badge">1</div>
+            <div>
+              <h3>上海金走势 + 持仓总览</h3>
+              <p class="sub">数据源为上海金 Au99.99 收盘价，与表内逐日核对一致</p>
+            </div>
+          </div>
+          <ul>
+            <li><strong>自动取数：</strong>每日收盘后自动写入当日金价，播报里附建议定投额分档</li>
+            <li><strong>持仓公式化：</strong>市值、持有收益、收益率全部由公式按最新单价实时计算</li>
+            <li><strong>可追溯：</strong>每一行的数据都能对回行情接口的原始收盘价</li>
+          </ul>
+          <span class="status-pill">每交易日自动运行</span>
+          <div class="screenshot">
+            <img src="images/chart_gold.png" alt="黄金播报走势与持仓" />
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <!-- 06 设计原则 -->
+    <section class="case" id="notes">
+      <div class="case-head">
+        <div class="case-index">06 · 设计原则</div>
+        <h2>这套系统能一直用下去的原因</h2>
+      </div>
+      <div class="notes">
+        <div class="note">
+          <span class="tag">口径先行</span>
+          <h4>先定口径，再谈图表</h4>
+          支出、收入、投资三分类在表单端就收窄；投资不算支出、大额支出按月摊销 —— 口径不对，记录越多越误导。
+        </div>
+        <div class="note">
+          <span class="tag">摩擦最小</span>
+          <h4>记录动作 ≤ 10 秒</h4>
+          桌面图标点开即填，最少必填项；记录门槛降下来，系统才能活着跑过几个月而不是三天热度。
+        </div>
+        <div class="note">
+          <span class="tag">数据同源</span>
+          <h4>一个 Base，多条链路</h4>
+          所有表单写进同一个多维表：手机表单、桌面挂件、定时播报读写的是同一份数据，没有二次录入。
+        </div>
+        <div class="note">
+          <span class="tag">原生优先</span>
+          <h4>能用原生的不用网页</h4>
+          桌面挂件用原生窗口做真置顶与透明度；写入做重试与类型校验，保证「改了就同步」。
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>个人效率系统 · 飞书多维表 + iOS 快捷指令 + Windows 原生挂件</footer>
+</body>
+</html>
